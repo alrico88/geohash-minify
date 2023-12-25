@@ -1,6 +1,6 @@
 {
   "name": "geohash-minify",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Compress a list of geohashes using the best combination across various precisions",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
