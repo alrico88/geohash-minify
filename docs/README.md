@@ -1,3 +1,5 @@
+geohash-minify / [Exports](modules.md)
+
 # geohash-minify
 
 Compress a list of geohashes using the best combination across various precisions

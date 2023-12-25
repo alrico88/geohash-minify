@@ -1,7 +1,7 @@
 {
-  "name": "ts-package-template",
+  "name": "geohash-minify",
   "version": "0.0.1",
-  "description": "DESCRIPTION",
+  "description": "Compress a list of geohashes using the best combination across various precisions",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "exports": {
@@ -30,7 +30,9 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.2",
     "husky": "^8.0.3",
+    "prettier": "^3.1.1",
     "tsup": "^8.0.1",
     "typedoc": "^0.25.4",
     "typedoc-plugin-markdown": "^3.17.1",
@@ -38,11 +40,13 @@
     "vitest": "^1.1.0"
   },
   "keywords": [
-    "KEYWORDS"
+    "geohash",
+    "compress",
+    "minify"
   ],
   "scripts": {
     "dev": "pnpm run build -- --watch src",
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "lint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.js src",
