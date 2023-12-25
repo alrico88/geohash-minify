@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alrico88/REPO"
+    "url": "https://github.com/alrico88/geohash-minify"
   },
   "sideEffects": false,
   "devDependencies": {
