@@ -21,23 +21,15 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
-    "c8": "^8.0.1",
+    "@biomejs/biome": "^2.5.7",
+    "@rslib/core": "^0.23.2",
+    "@vitest/coverage-v8": "^1.6.1",
     "coveralls": "^3.1.1",
-    "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^5.1.2",
     "husky": "^8.0.3",
-    "prettier": "^3.1.1",
-    "tsup": "^8.0.1",
     "typedoc": "^0.25.4",
     "typedoc-plugin-markdown": "^3.17.1",
     "typescript": "^5.3.3",
-    "vitest": "^1.1.0"
+    "vitest": "^1.6.1"
   },
   "keywords": [
     "geohash",
@@ -45,14 +37,17 @@
     "minify"
   ],
   "scripts": {
-    "dev": "pnpm run build -- --watch src",
-    "build": "tsup",
+    "dev": "rslib --watch",
+    "build": "rslib",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --cache --fix --ignore-path .gitignore --ext .ts,.js src",
+    "lint": "biome check --write src tests",
+    "format": "biome format --write src tests",
+    "typecheck": "tsc --noEmit",
     "docs": "typedoc src/index.ts --readme README.md --gitRevision master --plugin typedoc-plugin-markdown",
-    "prepublish": "pnpm run build",
-    "coveralls": "vitest run --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "prepack": "pnpm run build",
+    "coveralls": "vitest run --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {

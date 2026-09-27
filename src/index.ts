@@ -22,51 +22,46 @@ export function getCombinations(geohash: string): string[] {
 export function compressGeohashes(input: string[], minLevel: number): string[] {
   let geohashes = new Set(input);
 
-  const deleteGh = new Set<string>();
-  const finalGeohashes = new Set<string>();
-  let flag = true;
-  let finalGeohashesSize = 0;
-
-  // If input size less than 32
   if (geohashes.size < base32.length) {
-    return input;
+    return Array.from(geohashes);
   }
 
-  while (flag) {
-    finalGeohashes.clear();
-    deleteGh.clear();
+  let changed = true;
+
+  while (changed) {
+    changed = false;
+
+    // Count siblings per parent; a group is complete only with all 32.
+    const siblingCounts = new Map<string, number>();
 
     for (const geohash of geohashes) {
-      const geohashLength = geohash.length;
+      const parent = geohash.slice(0, -1);
 
-      if (geohashLength >= minLevel) {
-        const part = geohash.slice(0, -1);
+      // Only compress when the parent stays at or above the minimum precision.
+      if (parent.length < Math.max(minLevel, 1)) {
+        continue;
+      }
 
-        if (!deleteGh.has(part) && !deleteGh.has(geohash)) {
-          const combinations = getCombinations(part);
+      siblingCounts.set(parent, (siblingCounts.get(parent) ?? 0) + 1);
+    }
 
-          // eslint-disable-next-line @typescript-eslint/no-loop-func
-          if (combinations.every((value) => geohashes.has(value))) {
-            finalGeohashes.add(part);
+    const next = new Set<string>();
 
-            deleteGh.add(part);
-          } else {
-            deleteGh.add(geohash);
+    for (const geohash of geohashes) {
+      const parent = geohash.slice(0, -1);
 
-            finalGeohashes.add(geohash);
-          }
-
-          if (finalGeohashesSize === finalGeohashes.size) {
-            flag = false;
-          }
+      if (siblingCounts.get(parent) === base32.length) {
+        // Insert the parent once, where its first sibling was, keeping order stable.
+        if (!next.has(parent)) {
+          next.add(parent);
+          changed = true;
         }
+      } else {
+        next.add(geohash);
       }
     }
 
-    finalGeohashesSize = finalGeohashes.size;
-    geohashes.clear();
-
-    geohashes = new Set([...geohashes, ...finalGeohashes]);
+    geohashes = next;
   }
 
   return Array.from(geohashes);

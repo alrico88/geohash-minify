@@ -1,23 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2020",
     "module": "ESNext",
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2020"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Bundler"
+    "noEmit": true
   },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-    "tsup.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src", "tests", "rslib.config.ts", "vitest.config.ts"]
 }
